@@ -1,0 +1,42 @@
+ArrayList<Particle> particles = new ArrayList<Particle>();
+int[] colors = new int[2];
+int parNum = 1000;
+
+void setup() {
+  size(1920, 1080);
+
+  colorMode(HSB, 360, 100, 100, 100);
+
+  colors[0] = color(15, 90, 90, random(25, 50));
+  colors[1] = color(175, 90, 90, random(25, 50));
+
+  for (int i = 0; i < parNum; i++) {
+    println(i);
+    particles.add(new Particle(random(width), random(height), colors[int(random(0, 2))]));
+  }
+
+  background(0, 0, 5, 100);
+}
+
+void draw() {
+  for (int j = particles.size() - 1; j > 0; j--) {
+    particles.get(j).update();
+    particles.get(j).show();
+
+    if (particles.get(j).finished()) {
+      particles.remove(j);
+    }
+  }
+
+  for (int i = particles.size(); i < parNum; i++) {
+    particles.add(new Particle(random(width), random(height), colors[int(random(0, 2))]));
+  }
+}
+
+void keyPressed() {
+
+  if (key == 's' || key == 'S') {
+    noLoop();
+    saveFrame("######.png");//000002.png
+  }
+}
